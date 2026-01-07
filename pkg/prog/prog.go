@@ -1,3 +1,17 @@
+// Package prog is responsible for handling standard output (stdout) for progress tracking and display.
+//
+// This package provides utilities for creating and managing progress bars that are rendered to
+// standard output. It wraps the github.com/jedib0t/go-pretty/v6/progress library and configures
+// it with custom styling and formatting options.
+//
+// Key responsibilities:
+//   - Creating progress writers that output to os.Stdout by default
+//   - Configuring progress bar appearance (colors, width, format)
+//   - Managing progress tracking for download/upload operations
+//   - Displaying system performance metrics (CPU, memory, goroutines)
+//
+// The progress.Writer created by this package writes directly to os.Stdout and is used throughout
+// the application for displaying download progress, upload progress, and other long-running operations.
 package prog
 
 import (
@@ -10,6 +24,20 @@ import (
 	tsize "github.com/kopoli/go-terminal-size"
 )
 
+// New creates and configures a new progress.Writer that outputs to standard output (os.Stdout).
+//
+// The progress.NewWriter() call internally initializes a writer that renders to os.Stdout by default.
+// This function applies custom styling and formatting options for the tdl application.
+//
+// Parameters:
+//   - formatter: A progress.UnitsFormatter for formatting speed/size units
+//
+// Returns:
+//   - progress.Writer: A configured progress writer that renders to os.Stdout
+//
+// Usage:
+//   pw := prog.New(progress.FormatNumber)
+//   go pw.Render()  // Starts rendering progress to stdout in a goroutine
 func New(formatter progress.UnitsFormatter) progress.Writer {
 	pw := progress.NewWriter()
 	pw.SetAutoStop(false)
